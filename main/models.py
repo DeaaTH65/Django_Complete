@@ -12,24 +12,27 @@ class ArticleSeries(models.Model):
     class Meta:
         verbose_name_plural = 'Series'
         ordering = ['-published']
+        
+    def __str__(self):
+        return self.title
     
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
-    subtitle = models.CharField(max_length=200, default='', blank=True)
-    article_slug = models.SlugField('Article slug', null=False, blank=False, unique=True)
-    content = models.TextField
-    published = models.DateTimeField('Date published', default=timezone.now)
-    modified = models.DateTimeField('Date modified', default=timezone.now)
-    series = models.ForeignKey(ArticleSeries, default='', verbose_name='series', on_delete=models.SET_DEFAULT)
-    
+    subtitle = models.CharField(max_length=200, default="", blank=True)
+    article_slug = models.SlugField("Article slug", null=False, blank=False, unique=True)
+    content = models.TextField(blank=True)
+    published = models.DateTimeField("Date published", default=timezone.now)
+    modified = models.DateTimeField("Date modified", default=timezone.now)
+    series = models.ForeignKey(ArticleSeries, default="", verbose_name="Series", on_delete=models.SET_DEFAULT)
+
     def __str__(self):
         return self.title
-    
+
     @property
     def slug(self):
         return self.article_slug
-    
+
     class Meta:
-        verbose_name_plural = 'Article'
+        verbose_name_plural = "Article"
         ordering = ['-published']
