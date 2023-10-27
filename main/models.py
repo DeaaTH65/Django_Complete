@@ -11,6 +11,7 @@ class ArticleSeries(models.Model):
     
     class Meta:
         verbose_name_plural = 'Series'
+        ordering = ['-published']
     
 
 class Article(models.Model):
@@ -28,3 +29,7 @@ class Article(models.Model):
     @property
     def slug(self):
         return self.article_slug
+    
+    class Meta:
+        verbose_name_plural = 'Article'
+        ordering = ['-published']
