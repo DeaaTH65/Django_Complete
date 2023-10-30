@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'users',
     'tinymce',
     'fontawesomefree',
+    'crispy_forms',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

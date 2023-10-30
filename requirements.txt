@@ -1,3 +1,4 @@
 django
 django-tinymce
 fontawesomefree
+django-crispy-forms
