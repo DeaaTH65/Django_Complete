@@ -33,7 +33,7 @@ class Article(models.Model):
 
     @property
     def slug(self):
-        return self.article_slug
+        return self.series.slug + "/" + self.article_slug
 
     class Meta:
         verbose_name_plural = "Article"
