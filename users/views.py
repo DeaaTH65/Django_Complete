@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import get_user_model, login, logout, authenticate
 from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 
 
 # Create your views here.
@@ -40,4 +41,29 @@ def custom_logout(request):
 
 
 def custom_login(request):
-    pass
+    if request.user.is_authenticated:
+        return redirect("homepage")
+
+    if request.method == "POST":
+        form = AuthenticationForm(request=request, data=request.POST)
+        if form.is_valid():
+            user = authenticate(
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password"],
+            )
+            if user is not None:
+                login(request, user)
+                messages.success(request, f"Hello <b>{user.username}</b>! You have been logged in")
+                return redirect("homepage")
+
+        else:
+            for error in list(form.errors.values()):
+                messages.error(request, error) 
+
+    form = AuthenticationForm()
+
+    return render(
+        request=request,
+        template_name="users/login.html",
+        context={"form": form}
+        )
