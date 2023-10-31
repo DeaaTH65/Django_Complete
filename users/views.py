@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model, login, logout
 from .forms import UserRegistrationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -29,3 +30,14 @@ def register(request):
         template_name='users/register.html',
         context={'form': form}
     )
+    
+    
+@login_required
+def custom_logout(request):
+    logout(request)
+    messages.info(request, "Logged out successfully!")
+    return redirect("homepage")
+
+
+def custom_login(request):
+    pass
