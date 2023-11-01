@@ -4,13 +4,12 @@ from .forms import UserRegistrationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from .decorators import user_not_authenticated
 
 
 # Create your views here.
-def register(request):
-    if request.user.is_authenticated:
-        return redirect('/')
-    
+@user_not_authenticated
+def register(request):    
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -40,10 +39,8 @@ def custom_logout(request):
     return redirect("homepage")
 
 
+@user_not_authenticated
 def custom_login(request):
-    if request.user.is_authenticated:
-        return redirect("homepage")
-
     if request.method == "POST":
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
