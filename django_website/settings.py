@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'crispy_forms',
     'crispy_bootstrap4',
+    'captcha',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -131,6 +132,9 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
 AUTHENTICATION_BACKENDS = ['users.backends.EmailBackend']
+
+RECAPTCHA_PUBLIC_KEY = '6LcmnusoAAAAACmo2A4tMdd-sBnFw41gl6TpsYQu'
+RECAPTCHA_PRIVATE_KEY = '6LcmnusoAAAAAGBFwyx_IdRLw1DxN8u-8ZXvaQKL'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
