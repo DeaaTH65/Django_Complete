@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 from .models import Article, ArticleSeries
 
 
@@ -32,3 +31,28 @@ def article(request, series:str, article:str):
         template_name='main/article.html',
         context={"object": matching_article}
     )
+    
+    
+
+def new_series(request):
+    return redirect('/')
+
+
+def new_post(request):
+    return redirect('/')
+
+
+def series_update(request, series):
+    return redirect('/')
+
+
+def series_delete(request, series):
+    return redirect('/')
+
+
+def article_update(request, series, article):
+    return redirect('/')
+
+
+def article_delete(request, series, article):
+    return redirect('/')
