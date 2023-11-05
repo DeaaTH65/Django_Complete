@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Article, ArticleSeries
 from .decorators import user_is_superuser
+from .forms import SeriesCreateForm, SeriesUpdateForm, ArticleCreateForm, ArticleUpdateForm
 
 
 # Create your views here.
@@ -36,7 +37,23 @@ def article(request, series:str, article:str):
     
 @user_is_superuser
 def new_series(request):
-    return redirect('/')
+    if request.method == "POST":
+        form = SeriesCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("homepage")
+
+    else:
+         form = SeriesCreateForm()
+
+    return render(
+        request=request,
+        template_name='main/new_record.html',
+        context={
+            "object": "Series",
+            "form": form
+            }
+        )
 
 
 @user_is_superuser
