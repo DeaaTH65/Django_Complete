@@ -112,4 +112,17 @@ def article_update(request, series, article):
 
 @user_is_superuser
 def article_delete(request, series, article):
-    return redirect('/')
+    matching_article = Article.objects.filter(series__slug=series, article_slug=article).first()
+
+    if request.method == "POST":
+        matching_article.delete()
+        return redirect('/')
+    else:
+        return render(
+            request=request,
+            template_name='main/confirm_delete.html',
+            context={
+                "object": matching_article,
+                "type": "article"
+                }
+            )
