@@ -79,7 +79,25 @@ def new_post(request):
 
 @user_is_superuser
 def series_update(request, series):
-    return redirect('/')
+    matching_series = ArticleSeries.objects.filter(slug=series).first()
+
+    if request.method == "POST":
+        form = SeriesUpdateForm(request.POST, request.FILES, instance=matching_series)
+        if form.is_valid():
+            form.save()
+            return redirect('homepage')
+    
+    else:
+        form = SeriesUpdateForm(instance=matching_series)
+
+        return render(
+            request=request,
+            template_name='main/new_record.html',
+            context={
+                "object": "Series",
+                "form": form
+                }
+            )
 
 
 @user_is_superuser
