@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Article, ArticleSeries
+from .decorators import user_is_superuser
 
 
 # Create your views here.
@@ -9,7 +10,7 @@ def homepage(request):
     return render(
         request=request,
         template_name='main/home.html',
-        context={"objects": matching_series}
+        context={"objects": matching_series, "type": 'series'}
     )
 
 
@@ -19,7 +20,7 @@ def series(request, series:str):
     return render(
         request=request,
         template_name='main/home.html',
-        context={"objects": matching_series}
+        context={"objects": matching_series, 'type': 'article'}
     )
     
     
@@ -33,26 +34,31 @@ def article(request, series:str, article:str):
     )
     
     
-
+@user_is_superuser
 def new_series(request):
     return redirect('/')
 
 
+@user_is_superuser
 def new_post(request):
     return redirect('/')
 
 
+@user_is_superuser
 def series_update(request, series):
     return redirect('/')
 
 
+@user_is_superuser
 def series_delete(request, series):
     return redirect('/')
 
 
+@user_is_superuser
 def article_update(request, series, article):
     return redirect('/')
 
 
+@user_is_superuser
 def article_delete(request, series, article):
     return redirect('/')
