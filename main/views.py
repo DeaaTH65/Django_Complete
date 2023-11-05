@@ -58,7 +58,23 @@ def new_series(request):
 
 @user_is_superuser
 def new_post(request):
-    return redirect('/')
+    if request.method == "POST":
+        form = ArticleCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(f"{form.cleaned_data['series'].slug}/{form.cleaned_data.get('article_slug')}")
+
+    else:
+         form = ArticleCreateForm()
+
+    return render(
+        request=request,
+        template_name='main/new_record.html',
+        context={
+            "object": "Article",
+            "form": form
+            }
+        )
 
 
 @user_is_superuser
