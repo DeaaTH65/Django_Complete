@@ -102,7 +102,20 @@ def series_update(request, series):
 
 @user_is_superuser
 def series_delete(request, series):
-    return redirect('/')
+    matching_series = ArticleSeries.objects.filter(slug=series).first()
+
+    if request.method == "POST":
+        matching_series.delete()
+        return redirect('/')
+    else:
+        return render(
+            request=request,
+            template_name='main/confirm_delete.html',
+            context={
+                "object": matching_series,
+                "type": "Series"
+                }
+            )
 
 
 @user_is_superuser
