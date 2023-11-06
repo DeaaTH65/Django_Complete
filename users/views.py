@@ -4,18 +4,30 @@ from .forms import UserRegistrationForm, UserLoginForm, UserUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import user_not_authenticated
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
 
 
 # Create your views here.
+def activateEmail(request, user, to_email):
+    messages.success(request, f'Dear <b>{user}</b>, please go to your email <b>{to_email}</b> inbox and click on \
+        recieved activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
+
+
 @user_not_authenticated
-def register(request):    
+def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, f"New account registered {user.username}")
-            return redirect('/')
+            user = form.save(commit=False)
+            user.is_active=False
+            user.save()
+            activateEmail(request, user, form.cleaned_data.get('email'))
+            
+            return redirect('homepage')
         
         else:
             for error in list(form.errors.values()):
