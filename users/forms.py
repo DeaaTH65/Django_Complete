@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, SetPasswordForm
 from django.contrib.auth import get_user_model
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
@@ -37,3 +37,9 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ['first_name', 'last_name', 'email', 'image', 'description']
+        
+        
+class SetPasswordForm(SetPasswordForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['newpassword1', 'newpassword2']
