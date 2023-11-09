@@ -158,6 +158,8 @@ RECAPTCHA_PRIVATE_KEY = '6LcmnusoAAAAAGBFwyx_IdRLw1DxN8u-8ZXvaQKL'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880   # 5MB
+
 TINYMCE_DEFAULT_CONFIG = {
     'custom_undo_redo_levels': 100,
     'selector': 'textarea',
@@ -176,4 +178,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 'auto',
     "height": "600px",
     'image_caption': True,
+    'images_upload_url': 'upload_image',
 }
