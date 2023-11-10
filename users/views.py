@@ -13,6 +13,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from django.db.models.query_utils import Q
 
 
@@ -234,3 +236,6 @@ def passwordResetConfirm(request, uidb64, token):
     return redirect("homepage")
 
 
+def subscribe(request):
+    if request.method == 'POST':
+        return redirect('/')
