@@ -1,5 +1,6 @@
 from django import forms
 from .models import Article, ArticleSeries
+from tinymce.widgets import TinyMCE
 
 
 class SeriesCreateForm(forms.ModelForm):
@@ -52,3 +53,9 @@ class ArticleUpdateForm(forms.ModelForm):
             "series",
             "image",
         ]
+
+
+class NewsletterForm(forms.Form):
+    subject = forms.CharField()
+    receivers = forms.CharField()
+    message = forms.CharField(widget=TinyMCE(), label="Email content")

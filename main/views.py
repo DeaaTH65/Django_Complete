@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import Article, ArticleSeries
 from .decorators import user_is_superuser
-from .forms import SeriesCreateForm, SeriesUpdateForm, ArticleCreateForm, ArticleUpdateForm
+from .forms import SeriesCreateForm, SeriesUpdateForm, ArticleCreateForm, ArticleUpdateForm, NewsletterForm
 
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import os
 from uuid import uuid4
+
+from users.models import SubscribedUsers
 
 
 # Create your views here.
@@ -194,3 +196,10 @@ def upload_image(request, series, article):
         "Message": "Image upload successfully",
         "location": os.path.join(settings.MEDIA_URL, 'ArticleSeries', matching_article.slug, file_obj.name)
         })
+    
+    
+@user_is_superuser
+def newsletter(request):
+    form = NewsletterForm()
+    form.fields['receivers'].initial = ','.join([active.email for active in SubscribedUsers.objects.all()])
+    return render(request=request, template_name='main/newsletter.html', context={'form': form})
