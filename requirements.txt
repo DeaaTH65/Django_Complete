@@ -6,3 +6,4 @@ crispy-bootstrap4
 django-recaptcha
 pillow
 six
+psycopg2
