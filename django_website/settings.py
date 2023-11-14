@@ -45,16 +45,17 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'captcha',
-    # Allauth
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # All auth
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
 ]
 
-SITE_ID = 1
-SOCIALACCOUNT_LOGIN_ON_GET=True
+# SITE_ID = 1
+# SOCIALACCOUNT_LOGIN_ON_GET = True
+
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
@@ -161,23 +162,23 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
+
 AUTHENTICATION_BACKENDS = [
     'users.backends.EmailBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
-    ]
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+]
 
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
 
 RECAPTCHA_PUBLIC_KEY = '6LcmnusoAAAAACmo2A4tMdd-sBnFw41gl6TpsYQu'
 RECAPTCHA_PRIVATE_KEY = '6LcmnusoAAAAAGBFwyx_IdRLw1DxN8u-8ZXvaQKL'

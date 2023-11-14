@@ -20,6 +20,11 @@ from django.db.models.query_utils import Q
 
 
 # Create your views here.
+# def signup_redirect(request):
+#     messages.error(request, "Something wrong here, it may be that you already have account!")
+#     return redirect("homepage")
+
+
 def activate(request, uidb64, token):
     User = get_user_model()
     try:
